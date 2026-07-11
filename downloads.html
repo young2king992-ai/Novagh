@@ -1,23 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVA GH - Downloads</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Downloads - NOVA GH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body{background:#0a0a0a; color:white; font-family:Arial; text-align:center; padding:20px;}
+    h1{color:#ff5500;}
+    .btn{display:block; background:#ff5500; color:black; padding:15px; margin:15px auto; 
+         border-radius:15px; text-decoration:none; font-weight:bold; max-width:300px;}
+    .btn:hover{background:#ff7733;}
+    .downloader{background:#1a1a1a; padding:20px; border-radius:15px; margin:20px auto; max-width:400px;}
+    input{width:90%; padding:12px; border-radius:10px; border:none; margin:10px 0; font-size:16px;}
+    .download-btn{background:#25D366; color:white; border:none; padding:12px 20px; border-radius:10px; font-weight:bold; cursor:pointer;}
+    small{color:#aaa;}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📥 Free Downloads</h1>
-        <p>100% Free resources for Ghanaians</p>
-        
-        <a href="#" class="btn">📄 10 Resume Templates</a>
-        <a href="#" class="btn">📝 Cover Letter Examples</a>
-        <a href="#" class="btn">💼 Interview Questions PDF</a>
-        <a href="#" class="btn">🎓 Scholarship List 2026</a>
-        
-        <br><br>
-        <a href="index.html" class="btn">← Back Home</a>
-    </div>
+  <h1>📦 FREE DOWNLOADS</h1>
+  <p>100% Free resources for Ghanaians</p>
+
+  <!-- NEW VIDEO DOWNLOADER SECTION -->
+  <div class="downloader">
+    <h2>📹 Social Media Video Downloader</h2>
+    <p><small>Paste TikTok, Facebook, Instagram, YouTube link</small></p>
+    <input type="text" id="videoLink" placeholder="Paste video link here...">
+    <button class="download-btn" onclick="downloadVideo()">Download Now</button>
+    <p id="status" style="color:#ff5500;"></p>
+    <small>For personal use only. Respect creators.</small>
+  </div>
+
+  <!-- YOUR OLD BUTTONS -->
+  <a href="#" class="btn">📄 10 Resume Templates - Coming Soon</a>
+  <a href="#" class="btn">✍️ Cover Letter Examples - Coming Soon</a>
+  <a href="#" class="btn">💼 Interview Questions PDF - Coming Soon</a>
+  <a href="#" class="btn">🎓 Scholarship List 2026 - Coming Soon</a>
+  <a href="index.html" class="btn">← Back Home</a>
+
+<script>
+function downloadVideo() {
+  let link = document.getElementById('videoLink').value;
+  let status = document.getElementById('status');
+  
+  if(link === "") {
+    status.innerHTML = "Please paste a link first!";
+    return;
+  }
+  
+  status.innerHTML = "Processing... Please wait 10s";
+  
+  // This uses a free public API. It will open the download link in new tab
+  let apiUrl = "https://api.cobalt.tools/api/json"; // You can also use ssstik, snaptik APIs
+  
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({url: link})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.url) {
+      window.open(data.url, '_blank');
+      status.innerHTML = "Download started! ✅";
+    } else {
+      status.innerHTML = "Link not supported or error. Try again.";
+    }
+  })
+  .catch(err => {
+    status.innerHTML = "API error. Try this link: https://ssstik.io";
+  });
+}
+</script>
+
 </body>
-  </html>
+</html>
